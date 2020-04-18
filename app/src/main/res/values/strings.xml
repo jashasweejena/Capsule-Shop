@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Capsule-Shop</string>
+    <string name="app_splash_desc">You one-stop guide to all medzz</string>
+    <string name="intro_fragment_1">Get all your medicines on check!!</string>
+    <string name="intro_fragment_2">All the medicines around the clock in your app</string>
+    <string name="sign_in">Sign In</string>
+    <string name="verification_code">Verification Code</string>
+    <string name="enter_code">Enter Code</string>
+    <string name="enter_phone_number">Enter your phone number</string>
+    <string name="enter_code_manually">If not entered automatically, you can enter manually as well</string>
+    <string name="title_activity_database_read">DatabaseRead</string>
+    <string name="title_activity_shop_details">ShopDetails</string>
+    <string name="shop_name">shop_name</string>
+    <string name="action_settings">Settings</string>
+</resources>
