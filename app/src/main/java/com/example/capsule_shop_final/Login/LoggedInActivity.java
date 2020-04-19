@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.capsule_shop_final.Inventory.AddMedicinesActivity;
+import com.example.capsule_shop_final.Orders.MyOrders;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -37,7 +38,9 @@ public class LoggedInActivity extends AppCompatActivity {
         ordersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO order page
+                Intent intent = new Intent(LoggedInActivity.this, MyOrders.class);
+                startActivity(intent);
+
             }
         });
         inventoryButton.setOnClickListener(new View.OnClickListener() {

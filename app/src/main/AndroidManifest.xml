@@ -29,6 +29,9 @@
         <activity android:name=".Login.LoginScreen" />
         <activity android:name=".Login.ProfileActivity" />
         <activity android:name=".Login.VerifyPhoneActivity" />
+        <activity android:name=".Orders.MyOrders"
+            android:label="My Orders"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
