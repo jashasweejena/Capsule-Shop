@@ -66,13 +66,6 @@ public class MyOrders extends AppCompatActivity {
 //                Log.d(TAG, "onChanged: " + orders.si);
             }
         });
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                fetchOrders();
-            }
-        });
     }
 
     private void initialize(){
