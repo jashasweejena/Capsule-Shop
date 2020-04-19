@@ -13,9 +13,9 @@
     <string name="shop_name">shop_name</string>
     <string name="action_settings">Settings</string>
     <string name="key_uid">UID</string>
-    <string name="title_activity_logged_in">LoggedInActivity</string>
+    <string name="title_activity_logged_in">Select a button</string>
     <string name="my_orders">My Orders</string>
     <string name="title_activity_orders">OrdersActivity</string>
-    <string name="title_activity_add_medicines">AddMedicinesActivity</string>
+    <string name="title_activity_add_medicines">Add Medicines</string>
     <string name="update_inventory">Update inventory</string>
 </resources>
