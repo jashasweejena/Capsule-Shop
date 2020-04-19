@@ -2,7 +2,6 @@ package com.example.capsule_shop_final.Login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -41,12 +40,12 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         progressBar = findViewById(R.id.progressbar);
-        editText = findViewById(R.id.editTextCode);
+        editText = findViewById(R.id.input_shop_name);
 
         String phonenumber = getIntent().getStringExtra("phonenumber");
         sendVerificationCode(phonenumber);
 
-        findViewById(R.id.buttonSignIn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.button_shop_done).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -76,12 +75,14 @@ public class VerifyPhoneActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            Intent intent = new Intent(VerifyPhoneActivity.this, ProfileActivity.class);
+                            Intent intent = new Intent(VerifyPhoneActivity.this, ShopName.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
                             startActivity(intent);
 
-                            Log.d(TAG, "onComplete: " + task.getResult().getUser().getUid());
+                            //Get the UID and save to prefs for later use
+                            String uid = task.getResult().getUser().getUid();
+                            new PrefManager(VerifyPhoneActivity.this).saveData(getString(R.string.key_uid), uid);
 
                         } else {
                             Toast.makeText(VerifyPhoneActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();

@@ -10,7 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity">
+            android:name=".Inventory.AddMedicinesActivity"
+            android:label="@string/title_activity_add_medicines"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Login.LoggedInActivity"
+            android:label="@string/title_activity_logged_in"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Login.ShopName" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

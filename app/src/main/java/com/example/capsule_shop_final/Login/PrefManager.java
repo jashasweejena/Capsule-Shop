@@ -27,6 +27,11 @@ public class PrefManager {
         editor.commit();
     }
 
+    public void saveData(String key, String value){
+        editor.putString(key, value);
+        editor.commit();
+    }
+
     public boolean isFirstTimeLaunch() {
         return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }

@@ -142,7 +142,7 @@ public class DescActivity extends AppCompatActivity {
                 // still pages are left
                 btnNext.setText("Next");
                 btnSkip.setVisibility(View.VISIBLE);
-                startActivity(new Intent(DescActivity.this, ProfileActivity.class));
+                startActivity(new Intent(DescActivity.this, LoggedInActivity.class));
             }
         }
 
