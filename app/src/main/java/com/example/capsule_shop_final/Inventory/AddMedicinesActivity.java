@@ -68,8 +68,9 @@ public class AddMedicinesActivity extends AppCompatActivity {
     }
 
     private void writeData(List<Medicine> med1) {
-        myRef.child("medicine").setValue(med1);
+        myRef.child("medicines").setValue(med1);
     }
+
 
     private void initialize() {
         descEditText = findViewById(R.id.input_med_desc);
