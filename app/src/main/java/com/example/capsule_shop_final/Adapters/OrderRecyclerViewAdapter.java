@@ -64,8 +64,6 @@ public class OrderRecyclerViewAdapter extends RecyclerView.Adapter<OrderRecycler
             super(itemView);
             name = itemView.findViewById(R.id.order_name);
             address = itemView.findViewById(R.id.order_address);
-            medsList = itemView.findViewById(R.id.order_meds);
-            medsList.setText("");
 //            itemView.setOnClickListener(this);
         }
 
