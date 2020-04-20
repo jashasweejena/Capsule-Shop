@@ -38,21 +38,6 @@ public class LoggedInActivity extends AppCompatActivity {
         initialize();
         handle();
 
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel("MyNotifications", "MyNotifications", NotificationManager.IMPORTANCE_DEFAULT);
-
-            NotificationManager manager = getSystemService(NotificationManager.class);
-            manager.createNotificationChannel(channel);
-        }
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "MyNotifications")
-                .setContentTitle("This is my title")
-                .setSmallIcon(R.drawable.ic_capsule_blue)
-                .setAutoCancel(true)
-                .setContentText("This is my text");
-
-        NotificationManagerCompat manager = NotificationManagerCompat.from(this);
-        manager.notify(999, builder.build());
     }
 
     private void handle() {

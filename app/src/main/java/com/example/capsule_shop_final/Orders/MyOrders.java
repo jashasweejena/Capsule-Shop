@@ -1,12 +1,9 @@
 package com.example.capsule_shop_final.Orders;
 
 import android.os.Bundle;
-
-import com.example.capsule_shop_final.Adapters.OrderRecyclerViewAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.MutableLiveData;
@@ -14,32 +11,28 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.View;
-
+import com.example.capsule_shop_final.Adapters.OrderRecyclerViewAdapter;
 import com.example.capsule_shop_final.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyOrders extends AppCompatActivity {
     final private static String TAG = "MyOrders";
-
+    private static MutableLiveData<ArrayList<Order>> mutableOrders = new MutableLiveData<>();
     private FirebaseDatabase database;
     private DatabaseReference myRef;
-    private static MutableLiveData<ArrayList<Order>> mutableOrders = new MutableLiveData<>();
     private String uid;
     private RecyclerView rv;
     private OrderRecyclerViewAdapter adapter;
     private List<Order> orderList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +61,7 @@ public class MyOrders extends AppCompatActivity {
         });
     }
 
-    private void initialize(){
+    private void initialize() {
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("shop");
 
@@ -77,20 +70,20 @@ public class MyOrders extends AppCompatActivity {
 
     }
 
-    private void recyclerView(){
+    private void recyclerView() {
         rv = findViewById(R.id.order_recyclerview);
         rv.setLayoutManager(new LinearLayoutManager(this));
         Log.d(TAG, "recyclerView: " + orderList);
     }
 
-    private MutableLiveData<ArrayList<Order>> fetchOrders(){
+    private MutableLiveData<ArrayList<Order>> fetchOrders() {
         final ArrayList<Order> mOrders = new ArrayList<>();
         DatabaseReference ref = myRef.child(uid).child("orders");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot child : dataSnapshot.getChildren()){
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Order order = child.getValue(Order.class);
                     mOrders.add(order);
                 }
