@@ -1,30 +1,28 @@
 package com.example.capsule_shop_final.Login;
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.example.capsule_shop_final.Inventory.AddMedicinesActivity;
-import com.example.capsule_shop_final.MainActivity;
-import com.example.capsule_shop_final.Orders.MyOrders;
-import com.example.capsule_shop_final.Orders.Order;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
-
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+
+import com.example.capsule_shop_final.Inventory.AddMedicinesActivity;
+import com.example.capsule_shop_final.Orders.MyOrders;
+import com.example.capsule_shop_final.Orders.Order;
 import com.example.capsule_shop_final.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +36,7 @@ import static android.app.Notification.DEFAULT_VIBRATE;
 
 public class LoggedInActivity extends AppCompatActivity {
     final private static String TAG = "LoggedInActivity";
+    final private static int MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 10;
 
     private Button ordersButton;
     private Button inventoryButton;
@@ -58,6 +57,8 @@ public class LoggedInActivity extends AppCompatActivity {
         handle();
 
         trackChanges();
+
+        handlePermissions();
 
     }
 
@@ -93,7 +94,7 @@ public class LoggedInActivity extends AppCompatActivity {
         });
     }
 
-    private void initialize(){
+    private void initialize() {
         ordersButton = findViewById(R.id.btn_my_orders);
         inventoryButton = findViewById(R.id.btn_update_inventory);
 
@@ -143,7 +144,7 @@ public class LoggedInActivity extends AppCompatActivity {
 
         Intent notificationIntent = new Intent(getApplicationContext(), MyOrders.class);
         notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, requestID,notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, requestID, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "MyNotifications")
                 .setContentTitle(title)
@@ -157,6 +158,30 @@ public class LoggedInActivity extends AppCompatActivity {
 
         NotificationManagerCompat manager = NotificationManagerCompat.from(this);
         manager.notify(999, builder.build());
+    }
+
+    private void handlePermissions() {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.READ_CONTACTS)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION);
+            }
+        } else {
+            Toast.makeText(this, "Permission has already been granted", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
