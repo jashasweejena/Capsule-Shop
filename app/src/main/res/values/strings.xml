@@ -18,4 +18,6 @@
     <string name="title_activity_orders">OrdersActivity</string>
     <string name="title_activity_add_medicines">Add Medicines</string>
     <string name="update_inventory">Update inventory</string>
+    <string name="channel_name">capsule</string>
+    <string name="channel_description">This is a notification channel for the Capsule-Shop app</string>
 </resources>
