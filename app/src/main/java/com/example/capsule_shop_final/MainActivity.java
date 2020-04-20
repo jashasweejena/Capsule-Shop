@@ -2,6 +2,7 @@ package com.example.capsule_shop_final;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.example.capsule_shop_final.Login.DescActivity;
+import com.example.capsule_shop_final.Orders.MyOrders;
 import com.example.capsule_shop_final.Orders.Order;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -87,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+//    TODO:- ADD HEADS UP POPUP
     private void sendNotification(String title, String body) {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel("MyNotifications", "MyNotifications", NotificationManager.IMPORTANCE_HIGH);
@@ -95,13 +98,20 @@ public class MainActivity extends AppCompatActivity {
             manager.createNotificationChannel(channel);
         }
 
+        int requestID = (int) System.currentTimeMillis();
+
+        Intent notificationIntent = new Intent(getApplicationContext(), MyOrders.class);
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, requestID,notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "MyNotifications")
                 .setContentTitle(title)
                 .setSmallIcon(R.drawable.ic_capsule_blue)
                 .setAutoCancel(true)
                 .setContentText(body)
                 .setDefaults(DEFAULT_SOUND | DEFAULT_VIBRATE)
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(contentIntent);
 
 
         NotificationManagerCompat manager = NotificationManagerCompat.from(this);
