@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.capsule_shop_final">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_automobile"
@@ -10,9 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Orders.OrderAccepted"
+            android:label="@string/title_activity_order_accepted"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".Inventory.AddMedicinesActivity"
             android:label="@string/title_activity_add_medicines"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Login.LoggedInActivity"
             android:label="@string/title_activity_logged_in"
@@ -29,10 +36,13 @@
         <activity android:name=".Login.LoginScreen" />
         <activity android:name=".Login.ProfileActivity" />
         <activity android:name=".Login.VerifyPhoneActivity" />
-        <activity android:name=".Orders.MyOrders"
+        <activity
+            android:name=".Location.LocationActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Orders.MyOrders"
             android:label="My Orders"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
 </manifest>

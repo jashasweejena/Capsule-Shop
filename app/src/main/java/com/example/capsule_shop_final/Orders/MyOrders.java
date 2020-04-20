@@ -1,10 +1,12 @@
 package com.example.capsule_shop_final.Orders;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.capsule_shop_final.Adapters.OrderRecyclerViewAdapter;
+import com.example.capsule_shop_final.Location.LocationActivity;
 import com.example.capsule_shop_final.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,6 +60,15 @@ public class MyOrders extends AppCompatActivity {
         recyclerView();
 
         refresh();
+
+        FloatingActionButton fab = findViewById(R.id.fab_ship);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MyOrders.this, LocationActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

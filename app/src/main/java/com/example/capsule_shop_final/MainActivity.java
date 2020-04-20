@@ -16,7 +16,7 @@ import com.example.capsule_shop_final.Login.DescActivity;
 
 public class MainActivity extends AppCompatActivity {
     public static final int splash_screen_timer = 500;
-    final private static String TAG = "MainActivity";
+    final private static String TAG = "LocationActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
