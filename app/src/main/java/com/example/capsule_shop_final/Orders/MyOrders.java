@@ -2,6 +2,9 @@ package com.example.capsule_shop_final.Orders;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,13 +55,25 @@ public class MyOrders extends AppCompatActivity {
 
         recyclerView();
 
-        fetchOrders().observe(this, new Observer<ArrayList<Order>>() {
-            @Override
-            public void onChanged(ArrayList<Order> orders) {
-                rv.setAdapter(new OrderRecyclerViewAdapter(orders, MyOrders.this));
-//                Log.d(TAG, "onChanged: " + orders.si);
-            }
-        });
+        refresh();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.action_refresh:
+                refresh();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void initialize() {
@@ -98,6 +113,18 @@ public class MyOrders extends AppCompatActivity {
         });
 
         return mutableOrders;
+    }
+
+    private void refresh(){
+        recyclerView();
+
+        fetchOrders().observe(this, new Observer<ArrayList<Order>>() {
+            @Override
+            public void onChanged(ArrayList<Order> orders) {
+                rv.setAdapter(new OrderRecyclerViewAdapter(orders, MyOrders.this));
+//                Log.d(TAG, "onChanged: " + orders.si);
+            }
+        });
     }
 
 }
