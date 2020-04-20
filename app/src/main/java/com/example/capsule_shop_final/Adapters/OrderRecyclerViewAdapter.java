@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.capsule_shop_final.Location.LocationActivity;
 import com.example.capsule_shop_final.Orders.Order;
 import com.example.capsule_shop_final.Orders.OrderAccepted;
 import com.example.capsule_shop_final.R;
@@ -74,7 +75,7 @@ public class OrderRecyclerViewAdapter extends RecyclerView.Adapter<OrderRecycler
         public void onClick(View view) {
             Context mContext = view.getContext();
             String customerName = ordersList.get(getAdapterPosition()).getName();
-            Intent intent = new Intent(mContext, OrderAccepted.class);
+            Intent intent = new Intent(mContext, LocationActivity.class);
             intent.putExtra(mContext.getString(R.string.shop_name_key), customerName);
             mContext.startActivity(intent);
         }

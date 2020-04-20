@@ -36,8 +36,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.capsule_shop_final.BuildConfig;
+import com.example.capsule_shop_final.Orders.Order;
 import com.example.capsule_shop_final.R;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -56,8 +59,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -141,6 +147,8 @@ public class LocationActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     private String uid;
+    private String userName;
+    private String userUid;
 
     /**
      * Tracks the status of the location updates request. Value changes when the user presses the
@@ -177,6 +185,9 @@ public class LocationActivity extends AppCompatActivity {
         uid = FirebaseAuth.getInstance().getUid();
         myRef = database.getReference(String.format("shop/%s/orders", uid));
 
+        Intent intent = getIntent();
+        String name = intent.getStringExtra(getString(R.string.shop_name_key));
+
         mRequestingLocationUpdates = false;
         mLastUpdateTime = "";
 
@@ -188,9 +199,44 @@ public class LocationActivity extends AppCompatActivity {
 
         // Kick off the process of building the LocationCallback, LocationRequest, and
         // LocationSettingsRequest objects.
+        fetchUserUid(name).observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                userUid = s;
+            }
+        });
         createLocationCallback();
         createLocationRequest();
         buildLocationSettingsRequest();
+    }
+
+    private MutableLiveData<String> fetchUserUid(final String searchName) {
+        final MutableLiveData<String> mutableLiveData = new MutableLiveData<>();
+        myRef.orderByChild("name").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    if(snapshot.child("name").exists()){
+                        Order order = snapshot.getValue(Order.class);
+//                        Log.d(TAG, "onDataChange: " + order.getName());
+                        if (order.getName().equals(searchName)){
+                            String key = snapshot.getKey();
+
+                            //Now push location updates to this key
+                            mutableLiveData.postValue(key);
+
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        return mutableLiveData;
     }
 
     /**
@@ -400,10 +446,10 @@ public class LocationActivity extends AppCompatActivity {
      */
     private void updateLocationUI() {
         if (mCurrentLocation != null) {
-
+            DatabaseReference ref = database.getReference(String.format("user/%s", userUid));
             //Update location in firebase here
             LocationModel loc = new LocationModel(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-            myRef.child("location").setValue(loc);
+            ref.child("location").setValue(loc);
 
             mLatitudeTextView.setText(String.format(Locale.ENGLISH, "%s: %f", mLatitudeLabel,
                     mCurrentLocation.getLatitude()));
